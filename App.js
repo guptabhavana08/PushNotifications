@@ -8,13 +8,6 @@
 
 // export default App;
 
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @flow
- */
-
 import React, {useState, useEffect} from 'react';
 import {
   Alert,
@@ -30,16 +23,10 @@ export const App = () => {
   const [permissions, setPermissions] = useState({});
 
   useEffect(() => {
-    PushNotificationIOS.addEventListener('register', onRegistered);
-    PushNotificationIOS.addEventListener(
-      'registrationError',
-      onRegistrationError,
-    );
-    PushNotificationIOS.addEventListener('notification', onRemoteNotification);
-    PushNotificationIOS.addEventListener(
-      'localNotification',
-      onLocalNotification,
-    );
+    // PushNotificationIOS.addEventListener(
+    //   'localNotification',
+    //   onLocalNotification,
+    // );
 
     PushNotificationIOS.requestPermissions().then(
       data => {
@@ -50,35 +37,13 @@ export const App = () => {
       },
     );
 
-    return () => {
-      PushNotificationIOS.removeEventListener('register', onRegistered);
-      PushNotificationIOS.removeEventListener(
-        'registrationError',
-        onRegistrationError,
-      );
-      PushNotificationIOS.removeEventListener(
-        'notification',
-        onRemoteNotification,
-      );
-      PushNotificationIOS.removeEventListener(
-        'localNotification',
-        onLocalNotification,
-      );
-    };
+    // return () => {
+    //   PushNotificationIOS.removeEventListener(
+    //     'localNotification',
+    //     onLocalNotification,
+    //   );
+    // };
   }, []);
-
-  const sendNotification = () => {
-    DeviceEventEmitter.emit('remoteNotificationReceived', {
-      remote: true,
-      aps: {
-        alert: 'Sample notification',
-        badge: '+1',
-        sound: 'default',
-        category: 'REACT_NATIVE',
-        'content-available': 1,
-      },
-    });
-  };
 
   const sendLocalNotification = () => {
     PushNotificationIOS.presentLocalNotification({
@@ -95,43 +60,6 @@ export const App = () => {
     });
   };
 
-  const onRegistered = deviceToken => {
-    Alert.alert('Registered For Remote Push', `Device Token: ${deviceToken}`, [
-      {
-        text: 'Dismiss',
-        onPress: null,
-      },
-    ]);
-  };
-
-  const onRegistrationError = error => {
-    Alert.alert(
-      'Failed To Register For Remote Push',
-      `Error (${error.code}): ${error.message}`,
-      [
-        {
-          text: 'Dismiss',
-          onPress: null,
-        },
-      ],
-    );
-  };
-
-  const onRemoteNotification = notification => {
-    const result = `Message: ${notification.getMessage()};\n
-      badge: ${notification.getBadgeCount()};\n
-      sound: ${notification.getSound()};\n
-      category: ${notification.getCategory()};\n
-      content-available: ${notification.getContentAvailable()}.`;
-
-    Alert.alert('Push Notification Received', result, [
-      {
-        text: 'Dismiss',
-        onPress: null,
-      },
-    ]);
-  };
-
   const onLocalNotification = notification => {
     Alert.alert(
       'Local Notification Received',
@@ -145,21 +73,8 @@ export const App = () => {
     );
   };
 
-  const showPermissions = () => {
-    PushNotificationIOS.checkPermissions(permissions => {
-      setPermissions({permissions});
-    });
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableHighlight
-        underlayColor={'white'}
-        style={styles.button}
-        onPress={sendNotification}>
-        <Text style={styles.buttonLabel}>Fake Nitification</Text>
-      </TouchableHighlight>
-
       <TouchableHighlight
         underlayColor={'white'}
         style={styles.button}
