@@ -24,20 +24,7 @@ import {
   View,
   DeviceEventEmitter,
 } from 'react-native';
-import PushNotificationIOS from '../js';
-
-class Button extends React.Component {
-  render() {
-    return (
-      <TouchableHighlight
-        underlayColor={'white'}
-        style={styles.button}
-        onPress={this.props.onPress}>
-        <Text style={styles.buttonLabel}>{this.props.label}</Text>
-      </TouchableHighlight>
-    );
-  }
-}
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 export const App = () => {
   const [permissions, setPermissions] = useState({});
@@ -166,18 +153,27 @@ export const App = () => {
 
   return (
     <View style={styles.container}>
-      <Button onPress={sendNotification} label="Send fake notification" />
+      <TouchableHighlight
+        underlayColor={'white'}
+        style={styles.button}
+        onPress={sendNotification}>
+        <Text style={styles.buttonLabel}>Fake Nitification</Text>
+      </TouchableHighlight>
 
-      <Button
-        onPress={sendLocalNotification}
-        label="Send fake local notification"
-      />
-      <Button
-        onPress={scheduleLocalNotification}
-        label="Schedule fake local notification"
-      />
+      <TouchableHighlight
+        underlayColor={'white'}
+        style={styles.button}
+        onPress={sendLocalNotification}>
+        <Text style={styles.buttonLabel}>Fake local Notification</Text>
+      </TouchableHighlight>
+      <TouchableHighlight
+        underlayColor={'white'}
+        style={styles.button}
+        onPress={scheduleLocalNotification}>
+        <Text style={styles.buttonLabel}>Scheduled</Text>
+      </TouchableHighlight>
 
-      <Button
+      {/* <Button
         onPress={() => PushNotificationIOS.setApplicationIconBadgeNumber(42)}
         label="Set app's icon badge to 42"
       />
@@ -188,7 +184,7 @@ export const App = () => {
       <View>
         <Button onPress={showPermissions} label="Show enabled permissions" />
         <Text>{JSON.stringify(permissions)}</Text>
-      </View>
+      </View> */}
     </View>
   );
 };
