@@ -27,14 +27,10 @@ const configure = () => {
 
 const localNotification = () => {
   if (Platform.OS === 'ios') {
-    console.log('ios noe');
-    PushNotificationIOS.presentLocalNotification({
-      // fireDate: moment(new Date(Date.now() + 60 * 1000)).format(
-      //   'YYYY-MM-DDTHH:mm:ss.SSSZ',
-      // ),
-      alertTitle: 'Devie',
+    PushNotificationIOS.scheduleLocalNotification({
       alertBody: 'Hey there is a message from devie !',
-      // repeatInterval: 'minute',
+      fireDate: new Date(Date.now() + 60 * 1000).toISOString(),
+      repeatInterval: 'minute',
     });
   } else {
     PushNotification.localNotificationSchedule({
